@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from "react";
-import { BUDGETS, COUNTRY_CODES, SERVICES, leadSchema, sendLead } from "@/lib/lead-form";
+import { BUDGETS, COUNTRY_CODES, SERVICES, leadSchema, leadWhatsappMessage, sendLead, type Lead } from "@/lib/lead-form";
 import { EMAIL, whatsappLink } from "@/lib/site-contact";
 
 const FLAGS: Record<(typeof COUNTRY_CODES)[number], string> = {
@@ -17,6 +17,7 @@ export function QuoteForm() {
   const [status, setStatus] = useState<Status>("idle");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [sentName, setSentName] = useState("");
+  const [failedLead, setFailedLead] = useState<Lead | null>(null);
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -48,6 +49,7 @@ export function QuoteForm() {
       setStatus("sent");
       form.reset();
     } catch {
+      setFailedLead(parsed.data);
       setStatus("failed");
     }
   }
@@ -111,9 +113,10 @@ export function QuoteForm() {
         {errors["terms"] && <p className={errorText} style={errStyle}>{errors["terms"]}</p>}
       </div>
       {status === "failed" && (
-        <p className="text-xs! text-center!" style={errStyle} role="alert">
-          Sorry, your request didn't go through. Please try again, or <a className="underline!" href={whatsappLink("Hi, I'd like a quote.")} target="_blank" rel="noopener noreferrer">message us on WhatsApp</a>.
-        </p>
+        <div className="rounded-md! border! p-3! text-center! space-y-2!" style={{ borderColor: "hsl(var(--destructive) / 0.4)" }} role="alert">
+          <p className="text-xs!" style={errStyle}>Sorry, we couldn't send your request right now. Tap below to send the same details to us on WhatsApp instead.</p>
+          <a className="inline-flex! items-center! justify-center! gap-2! h-10! w-full! rounded-md! text-sm! font-semibold! " style={{ background: "hsl(var(--primary))", color: "hsl(var(--primary-foreground))" }} href={whatsappLink(failedLead ? leadWhatsappMessage(failedLead) : "Hi, I'd like a quote.")} target="_blank" rel="noopener noreferrer">Send my details on WhatsApp</a>
+        </div>
       )}
       <button className="inline-flex items-center justify-center gap-2 text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-11 rounded-md px-8 w-full group whitespace-nowrap disabled:pointer-events-none" type="submit" disabled={sending}>
         {sending ? "Sending…" : "Submit"}

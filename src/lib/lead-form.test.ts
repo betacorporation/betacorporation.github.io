@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { LEAD_FORM_ENDPOINT, leadPayload, leadSchema, sendLead } from "./lead-form";
+import { LEAD_FORM_ENDPOINT, leadPayload, leadSchema, leadWhatsappMessage, sendLead } from "./lead-form";
 
 const valid = {
   name: "Jane Wanjiku",
@@ -34,5 +34,12 @@ describe("quote popup form", () => {
   it("reports a failure when the form service rejects the submission", async () => {
     const fetcher = vi.fn().mockResolvedValue(new Response(JSON.stringify({ success: "false", message: "nope" }), { status: 200 }));
     await expect(sendLead(leadSchema.parse(valid), fetcher)).rejects.toThrow("nope");
+  });
+
+  it("offers the client's details on WhatsApp when sending fails", () => {
+    const text = leadWhatsappMessage(leadSchema.parse(valid));
+    expect(text).toContain("Name: Jane Wanjiku");
+    expect(text).toContain("Phone: +254 712 345678");
+    expect(text).toContain("Project: I need a website for my salon.");
   });
 });

@@ -69,3 +69,18 @@ export async function sendLead(lead: Lead, fetcher: typeof fetch = fetch) {
     throw new Error(body.message || `Form service error (${response.status})`);
   }
 }
+
+/** Ready-written WhatsApp message carrying the client's details, used when the email relay fails. */
+export function leadWhatsappMessage(lead: Lead) {
+  const p = leadPayload(lead);
+  return [
+    `Hi ${BRAND}, I'd like a quote.`,
+    `Name: ${p.Name}`,
+    `Email: ${p.Email}`,
+    `Phone: ${p.Phone}`,
+    lead.company ? `Company: ${p.Company}` : "",
+    lead.service ? `Service: ${p.Service}` : "",
+    lead.budget ? `Budget: ${p.Budget}` : "",
+    `Project: ${p.Message}`,
+  ].filter(Boolean).join("\n");
+}
