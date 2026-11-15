@@ -115,7 +115,7 @@ export function QuoteForm() {
       {status === "failed" && (
         <div className="rounded-md! border! p-3! text-center! space-y-2!" style={{ borderColor: "hsl(var(--destructive) / 0.4)" }} role="alert">
           <p className="text-xs!" style={errStyle}>Sorry, we couldn't send your request right now. Tap below to send the same details to us on WhatsApp instead.</p>
-          <a className="inline-flex! items-center! justify-center! gap-2! h-10! w-full! rounded-md! text-sm! font-semibold! bg-primary! text-primary-foreground! hover:bg-primary/90!" href={whatsappLink(failedLead ? leadWhatsappMessage(failedLead) : "Hi, I'd like a quote.")} target="_blank" rel="noopener noreferrer">Send my details on WhatsApp</a>
+          <a className="inline-flex! items-center! justify-center! gap-2! h-10! w-full! rounded-md! text-sm! font-semibold! " style={{ background: "hsl(var(--primary))", color: "hsl(var(--primary-foreground))" }} href={whatsappLink(failedLead ? leadWhatsappMessage(failedLead) : "Hi, I'd like a quote.")} target="_blank" rel="noopener noreferrer">Send my details on WhatsApp</a>
         </div>
       )}
       <button className="inline-flex items-center justify-center gap-2 text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-11 rounded-md px-8 w-full group whitespace-nowrap disabled:pointer-events-none" type="submit" disabled={sending}>
