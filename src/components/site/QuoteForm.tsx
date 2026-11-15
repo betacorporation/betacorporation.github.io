@@ -8,7 +8,8 @@ const FLAGS: Record<(typeof COUNTRY_CODES)[number], string> = {
 
 const field =
   "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm";
-const errorText = "text-[11px]! text-destructive! mt-1!";
+const errorText = "text-[11px]! mt-1!";
+const errStyle = { color: "hsl(var(--destructive))" } as const;
 
 type Status = "idle" | "sending" | "sent" | "failed";
 
@@ -71,11 +72,11 @@ export function QuoteForm() {
       <div className="grid grid-cols-2 gap-3">
         <div>
           <input className={field} placeholder="Full name*" name="name" autoComplete="name" maxLength={100} aria-label="Full name" aria-invalid={!!errors["name"]} />
-          {errors["name"] && <p className={errorText}>{errors["name"]}</p>}
+          {errors["name"] && <p className={errorText} style={errStyle}>{errors["name"]}</p>}
         </div>
         <div>
           <input className={field} placeholder="Email*" type="email" name="email" autoComplete="email" maxLength={255} aria-label="Email" aria-invalid={!!errors["email"]} />
-          {errors["email"] && <p className={errorText}>{errors["email"]}</p>}
+          {errors["email"] && <p className={errorText} style={errStyle}>{errors["email"]}</p>}
         </div>
       </div>
       <div>
@@ -85,7 +86,7 @@ export function QuoteForm() {
           </select>
           <input className={field} placeholder="Phone number*" type="tel" name="phone" autoComplete="tel-national" maxLength={15} aria-label="Phone number" aria-invalid={!!errors["phone"]} />
         </div>
-        {errors["phone"] && <p className={errorText}>{errors["phone"]}</p>}
+        {errors["phone"] && <p className={errorText} style={errStyle}>{errors["phone"]}</p>}
       </div>
       <input className={field} placeholder="Company" name="company" autoComplete="organization" maxLength={120} aria-label="Company" />
       <div className="grid grid-cols-2 gap-3">
@@ -100,17 +101,17 @@ export function QuoteForm() {
       </div>
       <div>
         <textarea className={`${field} h-auto! min-h-[100px]! resize-none!`} placeholder="Tell us about your project*" name="message" maxLength={2000} aria-label="Tell us about your project" aria-invalid={!!errors["message"]} />
-        {errors["message"] && <p className={errorText}>{errors["message"]}</p>}
+        {errors["message"] && <p className={errorText} style={errStyle}>{errors["message"]}</p>}
       </div>
       <div>
         <label className="flex items-start gap-2 text-xs text-muted-foreground leading-snug cursor-pointer">
           <input type="checkbox" name="terms" className="mt-0.5 h-4 w-4 shrink-0 accent-[hsl(var(--primary))]" />
           <span>I accept the <a className="text-primary hover:underline" href="/terms" target="_blank">Terms &amp; Conditions</a> and <a className="text-primary hover:underline" href="/privacy" target="_blank">Privacy Policy</a>.</span>
         </label>
-        {errors["terms"] && <p className={errorText}>{errors["terms"]}</p>}
+        {errors["terms"] && <p className={errorText} style={errStyle}>{errors["terms"]}</p>}
       </div>
       {status === "failed" && (
-        <p className="text-xs! text-destructive! text-center!" role="alert">
+        <p className="text-xs! text-center!" style={errStyle} role="alert">
           Sorry, your request didn't go through. Please try again, or <a className="underline!" href={whatsappLink("Hi, I'd like a quote.")} target="_blank" rel="noopener noreferrer">message us on WhatsApp</a>.
         </p>
       )}
