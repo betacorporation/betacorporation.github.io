@@ -1,4 +1,3 @@
-import type { CSSProperties } from "react";
 import { useEffect, useRef, useState } from "react";
 import { useLocation } from "@tanstack/react-router";
 import { QuoteForm } from "@/components/site/QuoteForm";
