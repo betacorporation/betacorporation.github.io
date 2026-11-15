@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useRef } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteFooter, SiteHeader, SiteOverlays } from "@/components/site/SiteChrome";
-import { BRAND, CONTACT_PERSON, EMAIL, PHONE_DISPLAY, WHATSAPP_URL } from "@/lib/site-contact";
+import { BRAND, CONTACT_PERSON, EMAIL, PHONE_DISPLAY, SITE_URL, WHATSAPP_URL } from "@/lib/site-contact";
 import capturedCSS from "../styles/pages/about.css?raw";
 
 export const Route = createFileRoute("/about")({
@@ -16,6 +16,8 @@ export const Route = createFileRoute("/about")({
       { property: "og:description", content: "Beta Corporation is a Kenyan technology company building websites, custom software and digital solutions that help individuals and businesses grow." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { property: "og:image", content: `${SITE_URL}/site-assets/founder-josh-lee.jpg` },
+      { name: "twitter:image", content: `${SITE_URL}/site-assets/founder-josh-lee.jpg` },
     ],
   }),
   staticData: { sitemap: true, importedDocument: { html: { "className": "__variable_b021ee __variable_f166df", "lang": "en" }, body: { "className": "\x66ont-body \x61ntialiased \x66lex \x66lex-col \x6din-h-screen \x62g-background \x74ext-foreground" } } },
@@ -151,8 +153,8 @@ function ImportedSectionMeetTheMindsBehind() {
       </div>
       <div className={"\x6dx-auto [max-width:24rem]"}>
         <div className={"rounded-lg text-center \x73hadow-lg \x62order-0 \x62g-card flex flex-col [color:hsl(var(--card-foreground))] [overflow:hidden]"}>
-          <div className={"w-full \x62g-secondary/\x340 flex items-center justify-center [&]:relative"} style={{ aspectRatio: "4 / 3" }}>
-            <span className={"rounded-full \x62g-primary text-primary-foreground \x66ont-bold flex items-center justify-center"} style={{ width: "8rem", height: "8rem", fontSize: "2.5rem" }} aria-hidden="true">JL</span>
+          <div className={"w-full \x62g-secondary/\x340 flex items-center justify-center [&]:relative [overflow:hidden]"} style={{ aspectRatio: "3 / 4" }}>
+            <img className={"[&]:object-cover [&]:object-top"} style={{ position: "absolute", height: "100%", width: "100%", inset: "0px" }} alt={`${CONTACT_PERSON}, Founder of ${BRAND}`} width="848" height="1264" loading="lazy" decoding="async" src="/site-assets/founder-josh-lee.jpg" />
           </div>
           <div className={"p-6 flex flex-col \x66lex-grow"}>
             <h3 className={"\x66ont-semibold \x74ext-xl text-primary [letter-spacing:-0.025em]"}>{CONTACT_PERSON}</h3>
